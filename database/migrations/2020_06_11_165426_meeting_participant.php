@@ -13,9 +13,9 @@ class MeetingParticipant extends Migration
      */
     public function up()
     {
-        Schema::create('meeting_participant', function (Blueprint $table) {
+        Schema::create('meeting_participants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('event_id');
+            $table->foreignId('event_id')->constrained();
             $table->bigInteger('employee_id');
             $table->bigInteger('user_id');
             $table->timestamps();
@@ -29,6 +29,6 @@ class MeetingParticipant extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meeting_participant');
+        Schema::dropIfExists('meeting_participants');
     }
 }
