@@ -26,3 +26,4 @@ Route::group(['prefix' => 'api/v1', 'namespace' => 'Api\v1'], function () {
     Route::get('welcome',      'Api\v1\controller\MeetingController@index');
 
   });
+
