@@ -12,6 +12,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'meetings'], function() {
+    Route::get('/{id}', 'Api\v1\MeetingController@getMeetingById');
     Route::post('/', 'Api\v1\MeetingController@create');
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\v1\Meeting;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class MeetingController extends Controller
@@ -27,6 +28,26 @@ class MeetingController extends Controller
             return response()->json([
                 'data' => null,
                 'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getMeetingById($id)
+    {
+        try{
+            $meeting = Meeting::findOrFail($id);
+
+            return $meeting;
+
+        }catch (ModelNotFoundException $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'Meeting not found'
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'An error occurred, please try again'
             ]);
         }
     }
