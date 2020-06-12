@@ -58,4 +58,35 @@ class MeetingController extends Controller
             ], 500);
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            /*
+             * Authorization will done here
+             * to decide who can delete what
+             */
+
+            $meeting = Meeting::findOrFail($id)->delete();
+
+            return response()->json([
+                'data' => null,
+                'message' => 'Meeting has been successfully deleted '
+            ], 201);
+
+        }catch (ModelNotFoundException $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'Meeting does not exist 🤧'
+            ], 500);
+
+        }catch (\Exception $e) {
+
+            return response()->json([
+                'data' => null,
+                'message' => 'There was problem updating meeting 🥴'
+            ], 500);
+        }
+
+    }
 }
