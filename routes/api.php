@@ -3,16 +3,19 @@
 use Illuminate\Http\Request;
 
 /*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+ * Api Service Provider has done the visioning 🥳
+ * @link App\Providers\RouteServiceProvider | Line 85
+ */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'meetings'], function() {
+    Route::get('/{id}', 'Api\v1\MeetingController@getMeetingById');
+    Route::get('/', 'Api\v1\MeetingController@index');
+    Route::post('/', 'Api\v1\MeetingController@create');
+    Route::delete('/{id}', 'Api\v1\MeetingController@delete');
+    Route::put('/{id}', 'Api\v1\MeetingController@update');
+});
+
