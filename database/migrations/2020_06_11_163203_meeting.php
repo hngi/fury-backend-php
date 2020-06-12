@@ -13,7 +13,7 @@ class Meeting extends Migration
      */
     public function up()
     {
-        Schema::create('meetings', function (Blueprint $table) {
+        Schema::create('meetings', function (Blueprint $table){
             $table->bigIncrements('id');
             $table->bigInteger('event_id');
             $table->bigInteger('user_id');
