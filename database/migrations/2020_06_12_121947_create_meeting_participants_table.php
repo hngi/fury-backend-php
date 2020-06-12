@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Meeting extends Migration
+class CreateMeetingParticipantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class Meeting extends Migration
      */
     public function up()
     {
-        Schema::create('meetings', function (Blueprint $table){
+        Schema::create('meeting_participants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('event_id');
+            $table->unsignedBigInteger('event_id');
+            $table->foreign('event_id')->references('id')->on('meetings');
+            $table->bigInteger('employee_id');
             $table->bigInteger('user_id');
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ class Meeting extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meetings');
+        Schema::dropIfExists('meeting_participants');
     }
 }
