@@ -106,4 +106,24 @@ class MeetingController extends Controller
         }
 
     }
+
+    public function getMeetingById($id)
+    {
+        try{
+            $meeting = Meeting::findOrFail($id);
+
+            return $meeting;
+
+        }catch (ModelNotFoundException $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'Meeting not found'
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'An error occurred, please try again'
+            ]);
+        }
+    }
 }

@@ -12,6 +12,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'meetings'], function() {
+    Route::get('/{id}', 'Api\v1\MeetingController@getMeetingById');
     Route::get('/', 'Api\v1\MeetingController@index');
     Route::post('/', 'Api\v1\MeetingController@create');
     Route::delete('/{id}', 'Api\v1\MeetingController@delete');
