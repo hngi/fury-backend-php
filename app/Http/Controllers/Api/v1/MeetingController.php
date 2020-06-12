@@ -15,24 +15,20 @@ class MeetingController extends Controller
         $this->middleware('auth');
     }
     // app/Http/Controllers/SampleController.php
+
+
     /**
-     * @OA\Get(
-     *   path="/api/v1/meetings",
-     *   summary="Get all meetings with pagination",
+     * @OA\Get(path="/api/v1/meetings",
      *   tags={"Meeting"},
-     *   @OA\Response(response=201, description="Meeting successful fetched")
-     *
-     *   @OA\Response(response=401,  description="Unauthenticated",  description="Unauthenticated",)
-     *
-     *   @OA\Response(response=403,description="Forbidden")
-     *
-     *   @OA\Response(response=403,description="Forbidden")
+     *   summary="Get 25 meetings with pagination",
+     *   description="",
+     *   @OA\Response(response=201,  description="Get all meeting")
      * )
      */
     public function index()
     {
         try{
-            $meeting = Meeting::paginate(12);
+            $meeting = Meeting::paginate(25);
 
             return response()->json([
                 'data' => $meeting,
@@ -47,45 +43,46 @@ class MeetingController extends Controller
     }
 
     /**
-     * @@OA\Post(
-     *     path="/api/v1/meetings",
-     *     operationId="addMeeting",
-     *     summary="Add a new meeting to the database",
-     *     tags={"Meeting"},
-     *     @OA\RequestBody(
-     *      description="Meeting object that needs to be added to the store",
-     *      required=true,
-     *      @OA\Parameter(
-     *       name="user_id",
-     *       required=true,
-     *       description="The user id",
-     *       @OA\Schema(
-     *         type="integer"
-     *       )
-     *   ),
+     * @OA\POST(path="/api/v1/meetings",
+     *   tags={"Meeting"},
+     *   summary="Add a new meeting to the database",
+     *   description="Add a new meeting to the database",
      *   @OA\Parameter(
-     *     name="employee_id",
-     *     @OA\Schema(
-     *      type="integer",
+     *      name="event_id",
+     *      description="Event id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
      *     ),
-     *     description="The employee id",
-     *      ),
+     *    @OA\Parameter(
+     *      name="employee_id",
+     *      description="Employee id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
      *     ),
      *     @OA\Parameter(
-     *     name="event_id",
-     *     @OA\Schema(
-     *      type="integer",
+     *      name="user_id",
+     *      description="User id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
      *     ),
-     *     description="The event id",
-     *     ),
-     * @OA\Response(response=201, description="Meeting successful fetched")
+     *   @OA\Response(response=201,  description="Create Meeting"),
+     *   @OA\Response(response=500,  description="There is an error with your request")
      * )
      * @param Request $request
      * @return JsonResponse
      */
+
     public function create(Request $request)
     {
-
         try {
             $validatedData = $request->validate([
                 'event_id' => 'required|integer|max:255',
@@ -108,51 +105,41 @@ class MeetingController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/v1/meetings/{eventId}",
-     *     operationId="updateMeeting",
-     *     summary="Update meeting to the database",
-     *     tags={"Meeting"},
-     *     @OA\RequestBody(
-     *      description="Meeting object that needs to be updated to the store",
-     *      required=true,
-     *     @OA\Parameter(
-     *     name="eventId",
-     *     in="path",
-     *     description="Event Id to find a paticular meeting",
-     *     required=true,
-     *     @OA\Schema(
-     *         type="string"
-     *     )
-     *   ),
-     *      @OA\Parameter(
-     *       name="user_id",
-     *       required=true,
-     *       description="The user id",
-     *       @OA\Schema(
-     *         type="integer"
-     *       )
-     *   ),
+     * @OA\PUT(path="/api/v1/meetings/{meeting_id}",
+     *   tags={"Meeting"},
+     *   summary="Update an exisitng meeting to the database",
+     *   description="Update meeting to the database",
      *   @OA\Parameter(
-     *     name="employee_id",
-     *     @OA\Schema(
-     *      type="integer",
+     *      name="event_id",
+     *      description="Meeting id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
      *     ),
-     *     description="Employee id",
-     *      ),
+     *    @OA\Parameter(
+     *      name="employee_id",
+     *      description="Employee id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
      *     ),
-     *     *   @OA\Parameter(
-     *     name="event_id",
-     *     @OA\Schema(
-     *      type="integer",
+     *     @OA\Parameter(
+     *      name="user_id",
+     *      description="User id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
      *     ),
-     *     description="The event id",
-     *      ),
-     *     ),
-     * @OA\Response(response=201, description="Meeting successful fetched")
+     *   @OA\Response(response=201,  description="Create Meeting"),
+     *   @OA\Response(response=500,  description="There is an error with your request")
      * )
      * @param Request $request
-     * @param $id
      * @return JsonResponse
      */
 
@@ -184,27 +171,40 @@ class MeetingController extends Controller
     }
 
     /**
-     * @OA\Delete(path="/api/vi/meeting/{meeting_id}",
-     *   tags={"Meeting"},
-     *   summary="Delete Meeting",
-     *   description="This endpoint deletes a meeting",
-     *   operationId="meeting_id",
-     *   @OA\Parameter(
-     *     name="meeting_id",
-     *     in="path",
-     *     description="The meeting id that needs to be deleted",
-     *     required=true,
-     *     @OA\Schema(
-     *         type="integer"
-     *     )
-     *   ),
-     *   @OA\Response(response=400, description="Invalid username supplied"),
-     *   @OA\Response(response=500, description="User not found")
+     * @OA\Delete(
+     *     path="/api/v1/meeting/{meeting_id}",
+     *     summary="Deletes meeting",
+     *     description="",
+     *     operationId="deleteMeeting",
+     *     tags={"Meeting"},
+     *     @OA\Parameter(
+     *         description="Meeting id to delete",
+     *         in="path",
+     *         name="meetingId",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Header(
+     *         header="api_key",
+     *         description="Api key header",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Meeting not found"
+     *     ),
      * )
-     * @param $id
-     * @return JsonResponse
      */
-
     public function delete($id)
     {
         try {
@@ -236,27 +236,33 @@ class MeetingController extends Controller
 
     }
 
-    /**
-     * @OA\Get(path="/api/v1/{meeting_id}",
-     *   tags={"meeting"},
-     *   summary="Get meeting by Id",
-     *   description="This gets only one meeting by id",
-     *   operationId="getMeetingById",
-     *   @OA\Parameter(
-     *     name="meeting_id",
-     *     in="path",
-     *     description="The id that needs to be fetched. ",
-     *     required=true,
-     *     @OA\Schema(
-     *         type="integer"
-     *     )
-     *   ),
-     *   @OA\Response(response=200, description="successful operation",
-     *   @OA\Response(response=400, description="Invalid Id supplied"),
-     *   @OA\Response(response=500, description="An error has occurred"
-     * )
-     **/
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/meeting/{meeting_id}",
+     *     tags={"Meeting"},
+     *     operationId="getAMeeting",
+     *     summary="Get meeting by Id",
+     *     description="",
+     *     @OA\Parameter(
+     *      name="meeting",
+     *      description="Meeting id",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *      type="integer"
+     *      )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Meeting not found"
+     *     ),
+     * )
+     */
     public function getMeetingById($id)
     {
         try{

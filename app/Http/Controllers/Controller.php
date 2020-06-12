@@ -8,16 +8,13 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 /**
- * @SWG\Swagger(
- *   basePath="/",
- *   @SWG\Info(
+ * @OA\Swagger(
+ * basePath="/",
+ * @OA\Info(
  *     title="Meeting API",
- *     version="1.0.0"
+ *     version="0.1"
  *   )
  * )
- */
-/**
- * @OA\Info(title="My First API", version="0.1")
  */
 class Controller extends BaseController
 {
