@@ -30,3 +30,19 @@ Validation is done using laravel validator
 
 ## FlowChart & E-R Diagram
 ![](ER-Diagram.png)
+
+## DB Structure
+Meetings table
+* meeting_id
+* name
+* email
+* password
+* event_id
+* user_id
+* timestamps
+
+Meeting_participants table
+* event_id
+* employee_id
+* user_id
+* timestamps
