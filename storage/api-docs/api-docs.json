@@ -1,0 +1,173 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Meeting API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/v1/meetings": {
+            "get": {
+                "tags": [
+                    "Meeting"
+                ],
+                "summary": "Get 25 meetings with pagination",
+                "description": "",
+                "operationId": "App\\Http\\Controllers\\Api\\v1\\MeetingController::index",
+                "responses": {
+                    "201": {
+                        "description": "Get all meeting"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Meeting"
+                ],
+                "summary": "Add a new meeting to the database",
+                "description": "Add a new meeting to the database",
+                "operationId": "App\\Http\\Controllers\\Api\\v1\\MeetingController::create",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "employee_id",
+                        "in": "path",
+                        "description": "Employee id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create Meeting"
+                    },
+                    "500": {
+                        "description": "There is an error with your request"
+                    }
+                }
+            }
+        },
+        "/api/v1/meetings/{meeting_id}": {
+            "put": {
+                "tags": [
+                    "Meeting"
+                ],
+                "summary": "Update an exisitng meeting to the database",
+                "description": "Update meeting to the database",
+                "operationId": "App\\Http\\Controllers\\Api\\v1\\MeetingController::update",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "employee_id",
+                        "in": "path",
+                        "description": "Employee id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create Meeting"
+                    },
+                    "500": {
+                        "description": "There is an error with your request"
+                    }
+                }
+            }
+        },
+        "/api/v1/meeting/{meeting_id}": {
+            "get": {
+                "tags": [
+                    "Meeting"
+                ],
+                "summary": "Get meeting by Id",
+                "description": "",
+                "operationId": "getAMeeting",
+                "parameters": [
+                    {
+                        "name": "meeting",
+                        "in": "path",
+                        "description": "Meeting id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Meeting not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Meeting"
+                ],
+                "summary": "Deletes meeting",
+                "description": "",
+                "operationId": "deleteMeeting",
+                "parameters": [
+                    {
+                        "name": "meetingId",
+                        "in": "path",
+                        "description": "Meeting id to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Meeting not found"
+                    }
+                }
+            }
+        }
+    }
+}
